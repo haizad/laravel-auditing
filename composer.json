@@ -1,5 +1,5 @@
 {
-    "name": "owen-it/laravel-auditing",
+    "name": "haizad/laravel-auditing",
     "description": "Audit changes of your Eloquent models in Laravel/Lumen",
     "keywords": [
         "accountability",
@@ -20,10 +20,6 @@
     "homepage": "http://laravel-auditing.com",
     "type": "package",
     "license": "MIT",
-    "support": {
-        "issues": "https://github.com/owen-it/laravel-auditing/issues",
-        "source": "https://github.com/owen-it/laravel-auditing"
-    },
     "authors": [
         {
             "name": "Antério Vieira",
@@ -36,6 +32,12 @@
         {
             "name": "Raphael França",
             "email": "raphaelfrancabsb@gmail.com"
+        },
+        {
+            "name": "Haizad",
+            "email": "haizadannuar@gmail.com",
+            "homepage": "https://github.com/haizad",
+            "role": "contributing developer"
         }
     ],
     "require": {
@@ -52,12 +54,12 @@
     },
     "autoload": {
         "psr-4": {
-            "OwenIt\\Auditing\\": "src/"
+            "LaravelAuditing\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OwenIt\\Auditing\\Tests\\": "tests/"
+            "LaravelAuditing\\Tests\\": "tests/"
         }
     },
     "suggest": {
@@ -69,7 +71,7 @@
         },
         "laravel": {
             "providers": [
-                "OwenIt\\Auditing\\AuditingServiceProvider"
+                "LaravelAuditing\\AuditingServiceProvider"
             ]
         }
     },
