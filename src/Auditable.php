@@ -14,6 +14,7 @@ use OwenIt\Auditing\Contracts\IpAddressResolver;
 use OwenIt\Auditing\Contracts\UrlResolver;
 use OwenIt\Auditing\Contracts\UserAgentResolver;
 use OwenIt\Auditing\Contracts\UserResolver;
+use OwenIt\Auditing\Contracts\CustomUserIdResolver;
 use OwenIt\Auditing\Exceptions\AuditableTransitionException;
 use OwenIt\Auditing\Exceptions\AuditingException;
 
@@ -285,7 +286,7 @@ trait Auditable
             'event'              => $this->auditEvent,
             'auditable_id'       => $this->getKey(),
             'auditable_type'     => $this->getMorphClass(),
-            $morphPrefix . '_id'   => $user ? $user->getAuthIdentifier() : session()->get('user_id'),
+            $morphPrefix . '_id'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('user_id'),
             $morphPrefix . '_type' => $user ? $user->getMorphClass() : null,
             'url'                => $this->resolveUrl(),
             'ip_address'         => $this->resolveIpAddress(),
@@ -318,6 +319,24 @@ trait Auditable
         }
 
         throw new AuditingException('Invalid UserResolver implementation');
+    }
+
+    /**
+     * Resolve the Custom User Id.
+     *
+     * @throws AuditingException
+     *
+     * @return mixed|null
+     */
+    protected function resolveCustomUserId()
+    {
+        $customUserIdResolver = Config::get('audit.resolver.customUserId');
+
+        if (is_subclass_of($customUserIdResolver, CustomUserIdResolver::class)) {
+            return call_user_func([$customUserIdResolver, 'resolve']);
+        }
+
+        throw new AuditingException('Invalid customUserIdResolver implementation');
     }
 
     /**
