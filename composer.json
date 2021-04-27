@@ -54,12 +54,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelAuditing\\": "src/"
+            "OwenIt\\Auditing\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelAuditing\\Tests\\": "tests/"
+            "OwenIt\\Auditing\\Tests\\": "tests/"
         }
     },
     "suggest": {
@@ -71,7 +71,7 @@
         },
         "laravel": {
             "providers": [
-                "LaravelAuditing\\AuditingServiceProvider"
+                "OwenIt\\Auditing\\AuditingServiceProvider"
             ]
         }
     },
