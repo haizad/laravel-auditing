@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use OwenIt\Auditing\Contracts\AttributeEncoder;
 use OwenIt\Auditing\Contracts\AttributeRedactor;
 use OwenIt\Auditing\Contracts\IpAddressResolver;
@@ -284,7 +285,7 @@ trait Auditable
             'event'              => $this->auditEvent,
             'auditable_id'       => $this->getKey(),
             'auditable_type'     => $this->getMorphClass(),
-            $morphPrefix . '_id'   => $user ? $user->getAuthIdentifier() : null,
+            $morphPrefix . '_id'   => $user ? $user->getAuthIdentifier() : session()->get('user_id'),
             $morphPrefix . '_type' => $user ? $user->getMorphClass() : null,
             'url'                => $this->resolveUrl(),
             'ip_address'         => $this->resolveIpAddress(),
