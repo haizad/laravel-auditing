@@ -15,6 +15,7 @@ use OwenIt\Auditing\Contracts\UrlResolver;
 use OwenIt\Auditing\Contracts\UserAgentResolver;
 use OwenIt\Auditing\Contracts\UserResolver;
 use OwenIt\Auditing\Contracts\CustomUserIdResolver;
+use OwenIt\Auditing\Contracts\CustomGroupIdResolver;
 use OwenIt\Auditing\Exceptions\AuditableTransitionException;
 use OwenIt\Auditing\Exceptions\AuditingException;
 
@@ -286,8 +287,8 @@ trait Auditable
             'EVENT'              => $this->auditEvent,
             'AUDIT_ID'       => $this->getKey(),
             'auditable_type'     => $this->getMorphClass(),
-            $morphPrefix . '_id'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('USER_ID'),
-            $morphPrefix . '_type' => $user ? $user->getMorphClass() : null,
+            $morphPrefix . '_ID'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('USER_ID'),
+            $morphPrefix . '_MODEL' => $user ? $user->getMorphClass() : null,
             'URL'                => $this->resolveUrl(),
             'IP_ADDRESS'         => $this->resolveIpAddress(),
             'BROWSER'         => $this->resolveUserAgent(),

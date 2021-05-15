@@ -80,8 +80,8 @@ trait Audit
             'audit_tags'       => $this->TAGS,
             'audit_created_at' => $this->serializeDate($this->created_at),
             'audit_updated_at' => $this->serializeDate($this->updated_at),
-            'USER_ID'          => $this->getAttribute($morphPrefix.'_id'),
-            'USER_MODEL'        => $this->getAttribute($morphPrefix.'_type'),
+            'USER_ID'          => $this->getAttribute($morphPrefix.'_ID'),
+            'USER_MODEL'        => $this->getAttribute($morphPrefix.'_MODEL'),
         ];
 
         if ($this->user) {
