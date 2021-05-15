@@ -14,7 +14,7 @@ interface AuditDriver
     public function audit(Auditable $model): Audit;
 
     /**
-     * Remove older audits that go over the threshold.
+     * Remove older AUDIT_TRAILS that go over the threshold.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *

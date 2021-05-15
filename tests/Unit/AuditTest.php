@@ -28,7 +28,7 @@ class AuditTest extends AuditingTestCase
             'published_at' => $now,
         ]);
 
-        $audit = $article->audits()->first();
+        $audit = $article->AUDIT_TRAILS()->first();
 
         $this->assertCount(15, $resolvedData = $audit->resolveData());
 
@@ -41,8 +41,8 @@ class AuditTest extends AuditingTestCase
             'audit_tags'       => null,
             'audit_created_at' => $audit->created_at->toDateTimeString(),
             'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => null,
-            'user_type'        => null,
+            'USER_ID'          => null,
+            'USER_MODEL'        => null,
             'new_title'        => 'How To Audit Eloquent Models',
             'new_content'      => 'First step: install the laravel-auditing package.',
             'new_published_at' => $now->toDateTimeString(),
@@ -75,7 +75,7 @@ class AuditTest extends AuditingTestCase
             'published_at' => $now,
         ]);
 
-        $audit = $article->audits()->first();
+        $audit = $article->AUDIT_TRAILS()->first();
 
         $this->assertCount(21, $resolvedData = $audit->resolveData());
 
@@ -88,8 +88,8 @@ class AuditTest extends AuditingTestCase
             'audit_tags'       => null,
             'audit_created_at' => $audit->created_at->toDateTimeString(),
             'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => '1',
-            'user_type'        => User::class,
+            'USER_ID'          => '1',
+            'USER_MODEL'        => User::class,
             'user_is_admin'    => '1',
             'user_first_name'  => 'rick',
             'user_last_name'   => 'Sanchez',
@@ -125,7 +125,7 @@ class AuditTest extends AuditingTestCase
             'content'      => 'First step: install the laravel-auditing package.',
             'reviewed'     => 1,
             'published_at' => Carbon::now(),
-        ])->audits()->first();
+        ])->AUDIT_TRAILS()->first();
 
         // Resolve data, making it available to the getDataValue() method
         $this->assertCount(21, $audit->resolveData());
@@ -156,7 +156,7 @@ class AuditTest extends AuditingTestCase
      */
     public function itReturnsAuditMetadataAsArray()
     {
-        $audit = factory(Article::class)->create()->audits()->first();
+        $audit = factory(Article::class)->create()->AUDIT_TRAILS()->first();
 
         $this->assertCount(10, $metadata = $audit->getMetadata());
 
@@ -169,8 +169,8 @@ class AuditTest extends AuditingTestCase
             'audit_tags'       => null,
             'audit_created_at' => $audit->created_at->toDateTimeString(),
             'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => null,
-            'user_type'        => null,
+            'USER_ID'          => null,
+            'USER_MODEL'        => null,
         ], $metadata, true);
     }
 
@@ -189,7 +189,7 @@ class AuditTest extends AuditingTestCase
 
         $this->actingAs($user);
 
-        $audit = factory(Article::class)->create()->audits()->first();
+        $audit = factory(Article::class)->create()->AUDIT_TRAILS()->first();
 
         $this->assertCount(16, $metadata = $audit->getMetadata());
 
@@ -202,8 +202,8 @@ class AuditTest extends AuditingTestCase
             'audit_tags'       => null,
             'audit_created_at' => $audit->created_at->toDateTimeString(),
             'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => 1,
-            'user_type'        => User::class,
+            'USER_ID'          => 1,
+            'USER_MODEL'        => User::class,
             'user_is_admin'    => true,
             'user_first_name'  => 'Rick',
             'user_last_name'   => 'Sanchez',
@@ -219,7 +219,7 @@ class AuditTest extends AuditingTestCase
      */
     public function itReturnsAuditMetadataAsJsonString()
     {
-        $audit = factory(Article::class)->create()->audits()->first();
+        $audit = factory(Article::class)->create()->AUDIT_TRAILS()->first();
 
         $metadata = $audit->getMetadata(true, JSON_PRETTY_PRINT);
 
@@ -233,8 +233,8 @@ class AuditTest extends AuditingTestCase
     "audit_tags": null,
     "audit_created_at": "$audit->created_at",
     "audit_updated_at": "$audit->updated_at",
-    "user_id": null,
-    "user_type": null
+    "USER_ID": null,
+    "USER_MODEL": null
 }
 EOF;
 
@@ -256,7 +256,7 @@ EOF;
 
         $this->actingAs($user);
 
-        $audit = factory(Article::class)->create()->audits()->first();
+        $audit = factory(Article::class)->create()->AUDIT_TRAILS()->first();
 
         $metadata = $audit->getMetadata(true, JSON_PRETTY_PRINT);
 
@@ -270,8 +270,8 @@ EOF;
     "audit_tags": null,
     "audit_created_at": "$audit->created_at",
     "audit_updated_at": "$audit->updated_at",
-    "user_id": 1,
-    "user_type": "OwenIt\\\Auditing\\\Tests\\\Models\\\User",
+    "USER_ID": 1,
+    "USER_MODEL": "OwenIt\\\Auditing\\\Tests\\\Models\\\User",
     "user_is_admin": true,
     "user_first_name": "Rick",
     "user_last_name": "Sanchez",
@@ -297,7 +297,7 @@ EOF;
             'content'      => 'First step: install the laravel-auditing package.',
             'reviewed'     => 1,
             'published_at' => $now,
-        ])->audits()->first();
+        ])->AUDIT_TRAILS()->first();
 
         $this->assertCount(5, $modified = $audit->getModified());
 
@@ -314,7 +314,7 @@ EOF;
             'reviewed' => [
                 'new' => true,
             ],
-            'id' => [
+            'AUDIT_TRAILS_ID' => [
                 'new' => 1,
             ],
         ], $modified, true);
@@ -333,7 +333,7 @@ EOF;
             'content'      => 'First step: install the laravel-auditing package.',
             'reviewed'     => 1,
             'published_at' => $now,
-        ])->audits()->first();
+        ])->AUDIT_TRAILS()->first();
 
         $modified = $audit->getModified(true, JSON_PRETTY_PRINT);
 
@@ -351,7 +351,7 @@ EOF;
     "reviewed": {
         "new": true
     },
-    "id": {
+    "AUDIT_TRAILS_ID": {
         "new": 1
     }
 }
@@ -378,12 +378,12 @@ EOF;
         // Audit with redacted/encoded attributes
         $audit = factory(Audit::class)->create([
             'auditable_type' => get_class($article),
-            'old_values'     => [
+            'OLD_VALUES'     => [
                 'title'    => 'SG93IFRvIEF1ZGl0IE1vZGVscw==',
                 'content'  => '##A',
                 'reviewed' => 0,
             ],
-            'new_values'     => [
+            'NEW_VALUES'     => [
                 'title'    => 'SG93IFRvIEF1ZGl0IEVsb3F1ZW50IE1vZGVscw==',
                 'content'  => '############################################kage.',
                 'reviewed' => 1,
@@ -415,7 +415,7 @@ EOF;
     public function itReturnsTags()
     {
         $audit = factory(Audit::class)->create([
-            'tags' => 'foo,bar,baz',
+            'TAGS' => 'foo,bar,baz',
         ]);
 
         $this->assertIsArray($audit->getTags());
@@ -433,7 +433,7 @@ EOF;
     public function itReturnsEmptyTags()
     {
         $audit = factory(Audit::class)->create([
-            'tags' => null,
+            'TAGS' => null,
         ]);
 
         $this->assertIsArray($audit->getTags());

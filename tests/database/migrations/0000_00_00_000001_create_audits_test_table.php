@@ -13,21 +13,22 @@ class CreateAuditsTestTable extends Migration
      */
     public function up()
     {
-        Schema::create('audits', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('user_type')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('event');
-            $table->morphs('auditable');
-            $table->text('old_values')->nullable();
-            $table->text('new_values')->nullable();
-            $table->text('url')->nullable();
-            $table->ipAddress('ip_address')->nullable();
-            $table->string('user_agent')->nullable();
-            $table->string('tags')->nullable();
+        Schema::create('AUDIT_TRAILS', function (Blueprint $table) {
+            $table->increments('AUDIT_TRAILS_ID');
+            $table->string('USER_MODEL')->nullable();
+            $table->unsignedBigInteger('USER_ID')->nullable();
+            $table->unsignedBigInteger('GROUP_ID')->nullable();
+            $table->string('EVENT');
+            $table->morphs('AUDITABLE');
+            $table->text('OLD_VALUES')->nullable();
+            $table->text('NEW_VALUES')->nullable();
+            $table->text('URL')->nullable();
+            $table->ipAddress('IP_ADDRESS')->nullable();
+            $table->string('BROWSER')->nullable();
+            $table->string('TAGS')->nullable();
             $table->timestamps();
 
-            $table->index(['user_id', 'user_type']);
+            $table->index(['USER_ID', 'USER_MODEL']);
         });
     }
 
@@ -38,6 +39,6 @@ class CreateAuditsTestTable extends Migration
      */
     public function down()
     {
-        Schema::drop('audits');
+        Schema::drop('AUDIT_TRAILS');
     }
 }

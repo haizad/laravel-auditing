@@ -14,20 +14,20 @@ use OwenIt\Auditing\Tests\Models\User;
 
 $factory->define(Audit::class, function (Faker $faker) {
     return [
-        'user_id' => function () {
-            return factory(User::class)->create()->id;
+        'USER_ID' => function () {
+            return factory(User::class)->create()->AUDIT_TRAILS_ID;
         },
-        'user_type'    => User::class,
-        'event'        => 'updated',
-        'auditable_id' => function () {
-            return factory(Article::class)->create()->id;
+        'USER_MODEL'    => User::class,
+        'EVENT'        => 'updated',
+        'AUDIT_ID' => function () {
+            return factory(Article::class)->create()->AUDIT_TRAILS_ID;
         },
         'auditable_type' => Article::class,
-        'old_values'     => [],
-        'new_values'     => [],
-        'url'            => $faker->url,
-        'ip_address'     => $faker->ipv4,
-        'user_agent'     => $faker->userAgent,
-        'tags'           => implode(',', $faker->words(4)),
+        'OLD_VALUES'     => [],
+        'NEW_VALUES'     => [],
+        'URL'            => $faker->URL,
+        'IP_ADDRESS'     => $faker->ipv4,
+        'BROWSER'     => $faker->userAgent,
+        'TAGS'           => implode(',', $faker->words(4)),
     ];
 });

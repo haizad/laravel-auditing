@@ -86,7 +86,7 @@ class Auditor extends Manager implements Contracts\Auditor
     }
 
     /**
-     * Fire the Auditing event.
+     * Fire the Auditing EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable   $model
      * @param \OwenIt\Auditing\Contracts\AuditDriver $driver

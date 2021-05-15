@@ -34,7 +34,7 @@ trait Audit
     /**
      * {@inheritdoc}
      */
-    public function auditable()
+    public function AUDITABLE()
     {
         return $this->morphTo();
     }
@@ -72,16 +72,16 @@ trait Audit
 
         // Metadata
         $this->data = [
-            'audit_id'         => $this->id,
-            'audit_event'      => $this->event,
-            'audit_url'        => $this->url,
-            'audit_ip_address' => $this->ip_address,
-            'audit_user_agent' => $this->user_agent,
-            'audit_tags'       => $this->tags,
+            'audit_id'         => $this->AUDIT_TRAILS_ID,
+            'audit_event'      => $this->EVENT,
+            'audit_url'        => $this->URL,
+            'audit_ip_address' => $this->IP_ADDRESS,
+            'audit_user_agent' => $this->BROWSER,
+            'audit_tags'       => $this->TAGS,
             'audit_created_at' => $this->serializeDate($this->created_at),
             'audit_updated_at' => $this->serializeDate($this->updated_at),
-            'user_id'          => $this->getAttribute($morphPrefix.'_id'),
-            'user_type'        => $this->getAttribute($morphPrefix.'_type'),
+            'USER_ID'          => $this->getAttribute($morphPrefix.'_id'),
+            'USER_MODEL'        => $this->getAttribute($morphPrefix.'_type'),
         ];
 
         if ($this->user) {
@@ -93,11 +93,11 @@ trait Audit
         $this->metadata = array_keys($this->data);
 
         // Modified Auditable attributes
-        foreach ($this->new_values as $key => $value) {
+        foreach ($this->NEW_VALUES as $key => $value) {
             $this->data['new_'.$key] = $value;
         }
 
-        foreach ($this->old_values as $key => $value) {
+        foreach ($this->OLD_VALUES as $key => $value) {
             $this->data['old_'.$key] = $value;
         }
 
@@ -152,13 +152,13 @@ trait Audit
         }
 
         // Auditable value
-        if ($this->auditable && Str::startsWith($key, ['new_', 'old_'])) {
+        if ($this->AUDITABLE && Str::startsWith($key, ['new_', 'old_'])) {
             $attribute = substr($key, 4);
 
             return $this->getFormattedValue(
-                $this->auditable,
+                $this->AUDITABLE,
                 $attribute,
-                $this->decodeAttributeValue($this->auditable, $attribute, $value)
+                $this->decodeAttributeValue($this->AUDITABLE, $attribute, $value)
             );
         }
 
@@ -168,15 +168,15 @@ trait Audit
     /**
      * Decode attribute value.
      *
-     * @param Contracts\Auditable $auditable
+     * @param Contracts\Auditable $AUDITABLE
      * @param string              $attribute
      * @param mixed               $value
      *
      * @return mixed
      */
-    protected function decodeAttributeValue(Contracts\Auditable $auditable, string $attribute, $value)
+    protected function decodeAttributeValue(Contracts\Auditable $AUDITABLE, string $attribute, $value)
     {
-        $attributeModifiers = $auditable->getAttributeModifiers();
+        $attributeModifiers = $AUDITABLE->getAttributeModifiers();
 
         if (!array_key_exists($attribute, $attributeModifiers)) {
             return $value;
@@ -239,12 +239,12 @@ trait Audit
     }
 
     /**
-     * Get the Audit tags as an array.
+     * Get the Audit TAGS as an array.
      *
      * @return array
      */
     public function getTags(): array
     {
-        return preg_split('/,/', $this->tags, null, PREG_SPLIT_NO_EMPTY);
+        return preg_split('/,/', $this->TAGS, null, PREG_SPLIT_NO_EMPTY);
     }
 }

@@ -30,7 +30,7 @@ class Audited
     public $audit;
 
     /**
-     * Create a new Audited event instance.
+     * Create a new Audited EVENT instance.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable   $model
      * @param \OwenIt\Auditing\Contracts\AuditDriver $driver

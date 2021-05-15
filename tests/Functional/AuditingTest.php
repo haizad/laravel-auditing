@@ -118,9 +118,9 @@ class AuditingTest extends AuditingTestCase
 
         $audit = Audit::first();
 
-        $this->assertEmpty($audit->old_values);
+        $this->assertEmpty($audit->OLD_VALUES);
 
-        $this->assertEmpty($audit->new_values);
+        $this->assertEmpty($audit->NEW_VALUES);
     }
 
     /**
@@ -141,15 +141,15 @@ class AuditingTest extends AuditingTestCase
 
         $audit = Audit::first();
 
-        $this->assertEmpty($audit->old_values);
+        $this->assertEmpty($audit->OLD_VALUES);
 
         Assert::assertArraySubset([
             'title'        => 'How To Audit Eloquent Models',
             'content'      => 'N/A',
             'published_at' => null,
             'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->new_values, true);
+            'AUDIT_TRAILS_ID'           => 1,
+        ], $audit->NEW_VALUES, true);
     }
 
     /**
@@ -182,13 +182,13 @@ class AuditingTest extends AuditingTestCase
             'content'      => 'N/A',
             'published_at' => null,
             'reviewed'     => 0,
-        ], $audit->old_values, true);
+        ], $audit->OLD_VALUES, true);
 
         Assert::assertArraySubset([
             'content'      => 'First step: install the laravel-auditing package.',
             'published_at' => $now->toDateTimeString(),
             'reviewed'     => 1,
-        ], $audit->new_values, true);
+        ], $audit->NEW_VALUES, true);
     }
 
     /**
@@ -216,10 +216,10 @@ class AuditingTest extends AuditingTestCase
             'content'      => 'N/A',
             'published_at' => null,
             'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->old_values, true);
+            'AUDIT_TRAILS_ID'           => 1,
+        ], $audit->OLD_VALUES, true);
 
-        $this->assertEmpty($audit->new_values);
+        $this->assertEmpty($audit->NEW_VALUES);
     }
 
     /**
@@ -243,15 +243,15 @@ class AuditingTest extends AuditingTestCase
 
         $audit = Audit::first();
 
-        $this->assertEmpty($audit->old_values);
+        $this->assertEmpty($audit->OLD_VALUES);
 
         Assert::assertArraySubset([
             'title'        => 'How To Audit Eloquent Models',
             'content'      => 'N/A',
             'published_at' => null,
             'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->new_values, true);
+            'AUDIT_TRAILS_ID'           => 1,
+        ], $audit->NEW_VALUES, true);
     }
 
     /**
@@ -274,7 +274,7 @@ class AuditingTest extends AuditingTestCase
             ]);
         }
 
-        $this->assertSame(100, $article->audits()->count());
+        $this->assertSame(100, $article->AUDIT_TRAILS()->count());
     }
 
     /**
@@ -297,7 +297,7 @@ class AuditingTest extends AuditingTestCase
             ]);
         }
 
-        $this->assertSame(10, $article->audits()->count());
+        $this->assertSame(10, $article->AUDIT_TRAILS()->count());
     }
 
     /**
@@ -343,15 +343,15 @@ class AuditingTest extends AuditingTestCase
 
         $audit = Audit::first();
 
-        $this->assertEmpty($audit->old_values);
+        $this->assertEmpty($audit->OLD_VALUES);
 
         Assert::assertArraySubset([
             'title'        => 'How To Audit Using The Fallback Driver',
             'content'      => 'N/A',
             'published_at' => null,
             'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->new_values, true);
+            'AUDIT_TRAILS_ID'           => 1,
+        ], $audit->NEW_VALUES, true);
     }
 
     /**

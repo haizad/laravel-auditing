@@ -11,11 +11,11 @@
 
 ## v8.0.4 (2018-11-20)
 ### Changed
-- Make the `auditable()` and `user()` method return types loose
+- Make the `AUDITABLE()` and `user()` method return types loose
 
 ## v8.0.3 (2018-10-25)
 ### Fixed
-- Cast `auditable_id` property by default to avoid `transitionTo()` errors ([#432](https://github.com/owen-it/laravel-auditing/issues/432))
+- Cast `AUDIT_ID` property by default to avoid `transitionTo()` errors ([#432](https://github.com/owen-it/laravel-auditing/issues/432))
 
 ## v8.0.2 (2018-10-02)
 ### Fixed
@@ -107,9 +107,9 @@
 ## v5.0.0 (2017-11-28)
 ### Added
 - Custom exceptions
-- Ability to tag audits ([#283](https://github.com/owen-it/laravel-auditing/issues/283))
+- Ability to tag AUDIT_TRAILS ([#283](https://github.com/owen-it/laravel-auditing/issues/283))
 - New `transitionTo()` and `getAuditEvent()` methods to the `Auditable` contract
-- Support for the `retrieved` Eloquent event, added in v5.5 ([#343](https://github.com/owen-it/laravel-auditing/issues/343))
+- Support for the `retrieved` Eloquent EVENT, added in v5.5 ([#343](https://github.com/owen-it/laravel-auditing/issues/343))
 
 ### Changed
 - Use PHP 7 features (scalar type/return type declarations, null coalescing operator)
@@ -120,7 +120,7 @@
 
 ### Removed
 - PHP 5.x support
-- `Closure` / `callable` support for User id resolver
+- `Closure` / `callable` support for User AUDIT_TRAILS_ID resolver
 
 ## v4.1.4 (2017-10-29)
 ### Added
@@ -154,7 +154,7 @@
 ## v4.1.0 (2017-07-09)
 ### Added
 - Implemented Audit contract, enabling classes to extend other model types ([#211](https://github.com/owen-it/laravel-auditing/issues/211))
-- The `updated_at` attribute is now part of the Audit model. Don't forget to update your `audits` table!
+- The `updated_at` attribute is now part of the Audit model. Don't forget to update your `AUDIT_TRAILS` table!
 - Added Laravel 5.5 Auto-Discovery support
 
 ### Fixed
@@ -173,7 +173,7 @@
 
 ## v4.0.5 (2017-05-03)
 ### Fixed
-- Removed problematic ORDER BY from the audits() relation method in the Auditable trait
+- Removed problematic ORDER BY from the AUDIT_TRAILS() relation method in the Auditable trait
 
 ## v4.0.4 (2017-05-01)
 ### Added
@@ -200,7 +200,7 @@
 - More `Auditable` tests
 
 ### Fixed
-- Non auditable events cause a `RuntimeException` to be thrown ([#212](https://github.com/owen-it/laravel-auditing/issues/212))
+- Non AUDITABLE events cause a `RuntimeException` to be thrown ([#212](https://github.com/owen-it/laravel-auditing/issues/212))
 - `Callable` values prevent the configuration from being cached ([#213](https://github.com/owen-it/laravel-auditing/issues/213))
 
 ## v4.0.1 (2017-03-15)

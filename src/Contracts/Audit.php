@@ -19,11 +19,11 @@ interface Audit
     public function getTable(): string;
 
     /**
-     * Get the auditable model to which this Audit belongs.
+     * Get the AUDITABLE model to which this Audit belongs.
      *
      * @return mixed
      */
-    public function auditable();
+    public function AUDITABLE();
 
     /**
      * User responsible for the changes.

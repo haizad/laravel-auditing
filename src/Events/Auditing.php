@@ -22,7 +22,7 @@ class Auditing
     public $driver;
 
     /**
-     * Create a new Auditing event instance.
+     * Create a new Auditing EVENT instance.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable   $model
      * @param \OwenIt\Auditing\Contracts\AuditDriver $driver

@@ -28,7 +28,7 @@ trait Auditable
     protected $excludedAttributes = [];
 
     /**
-     * Audit event name.
+     * Audit EVENT name.
      *
      * @var string
      */
@@ -56,11 +56,11 @@ trait Auditable
     /**
      * {@inheritdoc}
      */
-    public function audits(): MorphMany
+    public function AUDIT_TRAILS(): MorphMany
     {
         return $this->morphMany(
             Config::get('audit.implementation', Models\Audit::class),
-            'auditable'
+            'AUDITABLE'
         );
     }
 
@@ -107,13 +107,13 @@ trait Auditable
     }
 
     /**
-     * Get the old/new attributes of a retrieved event.
+     * Get the old/new attributes of a retrieved EVENT.
      *
      * @return array
      */
     protected function getRetrievedEventAttributes(): array
     {
-        // This is a read event with no attribute changes,
+        // This is a read EVENT with no attribute changes,
         // only metadata will be stored in the Audit
 
         return [
@@ -123,7 +123,7 @@ trait Auditable
     }
 
     /**
-     * Get the old/new attributes of a created event.
+     * Get the old/new attributes of a created EVENT.
      *
      * @return array
      */
@@ -144,7 +144,7 @@ trait Auditable
     }
 
     /**
-     * Get the old/new attributes of an updated event.
+     * Get the old/new attributes of an updated EVENT.
      *
      * @return array
      */
@@ -167,7 +167,7 @@ trait Auditable
     }
 
     /**
-     * Get the old/new attributes of a deleted event.
+     * Get the old/new attributes of a deleted EVENT.
      *
      * @return array
      */
@@ -188,13 +188,13 @@ trait Auditable
     }
 
     /**
-     * Get the old/new attributes of a restored event.
+     * Get the old/new attributes of a restored EVENT.
      *
      * @return array
      */
     protected function getRestoredEventAttributes(): array
     {
-        // A restored event is just a deleted event in reverse
+        // A restored EVENT is just a deleted EVENT in reverse
         return array_reverse($this->getDeletedEventAttributes());
     }
 
@@ -247,14 +247,14 @@ trait Auditable
     public function toAudit(): array
     {
         if (!$this->readyForAuditing()) {
-            throw new AuditingException('A valid audit event has not been set');
+            throw new AuditingException('A valid audit EVENT has not been set');
         }
 
         $attributeGetter = $this->resolveAttributeGetter($this->auditEvent);
 
         if (!method_exists($this, $attributeGetter)) {
             throw new AuditingException(sprintf(
-                'Unable to handle "%s" event, %s() method missing',
+                'Unable to handle "%s" EVENT, %s() method missing',
                 $this->auditEvent,
                 $attributeGetter
             ));
@@ -276,22 +276,22 @@ trait Auditable
 
         $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
 
-        $tags = implode(',', $this->generateTags());
+        $TAGS = implode(',', $this->generateTags());
 
         $user = $this->resolveUser();
 
         return $this->transformAudit([
-            'old_values'         => $old,
-            'new_values'         => $new,
-            'event'              => $this->auditEvent,
-            'auditable_id'       => $this->getKey(),
+            'OLD_VALUES'         => $old,
+            'NEW_VALUES'         => $new,
+            'EVENT'              => $this->auditEvent,
+            'AUDIT_ID'       => $this->getKey(),
             'auditable_type'     => $this->getMorphClass(),
-            $morphPrefix . '_id'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('user_id'),
+            $morphPrefix . '_id'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('USER_ID'),
             $morphPrefix . '_type' => $user ? $user->getMorphClass() : null,
-            'url'                => $this->resolveUrl(),
-            'ip_address'         => $this->resolveIpAddress(),
-            'user_agent'         => $this->resolveUserAgent(),
-            'tags'               => empty($tags) ? null : $tags,
+            'URL'                => $this->resolveUrl(),
+            'IP_ADDRESS'         => $this->resolveIpAddress(),
+            'BROWSER'         => $this->resolveUserAgent(),
+            'TAGS'               => empty($TAGS) ? null : $TAGS,
         ]);
     }
 
@@ -348,7 +348,7 @@ trait Auditable
      */
     protected function resolveUrl(): string
     {
-        $urlResolver = Config::get('audit.resolver.url');
+        $urlResolver = Config::get('audit.resolver.URL');
 
         if (is_subclass_of($urlResolver, UrlResolver::class)) {
             return call_user_func([$urlResolver, 'resolve']);
@@ -366,7 +366,7 @@ trait Auditable
      */
     protected function resolveIpAddress(): string
     {
-        $ipAddressResolver = Config::get('audit.resolver.ip_address');
+        $ipAddressResolver = Config::get('audit.resolver.IP_ADDRESS');
 
         if (is_subclass_of($ipAddressResolver, IpAddressResolver::class)) {
             return call_user_func([$ipAddressResolver, 'resolve']);
@@ -384,7 +384,7 @@ trait Auditable
      */
     protected function resolveUserAgent()
     {
-        $userAgentResolver = Config::get('audit.resolver.user_agent');
+        $userAgentResolver = Config::get('audit.resolver.BROWSER');
 
         if (is_subclass_of($userAgentResolver, UserAgentResolver::class)) {
             return call_user_func([$userAgentResolver, 'resolve']);
@@ -407,7 +407,7 @@ trait Auditable
             return false;
         }
 
-        // The attribute is auditable when explicitly
+        // The attribute is AUDITABLE when explicitly
         // listed or when the include array is empty
         $include = $this->getAuditInclude();
 
@@ -415,33 +415,33 @@ trait Auditable
     }
 
     /**
-     * Determine whether an event is auditable.
+     * Determine whether an EVENT is AUDITABLE.
      *
-     * @param string $event
+     * @param string $EVENT
      *
      * @return bool
      */
-    protected function isEventAuditable($event): bool
+    protected function isEventAuditable($EVENT): bool
     {
-        return is_string($this->resolveAttributeGetter($event));
+        return is_string($this->resolveAttributeGetter($EVENT));
     }
 
     /**
      * Attribute getter method resolver.
      *
-     * @param string $event
+     * @param string $EVENT
      *
      * @return string|null
      */
-    protected function resolveAttributeGetter($event)
+    protected function resolveAttributeGetter($EVENT)
     {
         foreach ($this->getAuditEvents() as $key => $value) {
             $auditableEvent = is_int($key) ? $value : $key;
 
             $auditableEventRegex = sprintf('/%s/', preg_replace('/\*+/', '.*', $auditableEvent));
 
-            if (preg_match($auditableEventRegex, $event)) {
-                return is_int($key) ? sprintf('get%sEventAttributes', ucfirst($event)) : $value;
+            if (preg_match($auditableEventRegex, $EVENT)) {
+                return is_int($key) ? sprintf('get%sEventAttributes', ucfirst($EVENT)) : $value;
             }
         }
     }
@@ -449,9 +449,9 @@ trait Auditable
     /**
      * {@inheritdoc}
      */
-    public function setAuditEvent(string $event): Contracts\Auditable
+    public function setAuditEvent(string $EVENT): Contracts\Auditable
     {
-        $this->auditEvent = $this->isEventAuditable($event) ? $event : null;
+        $this->auditEvent = $this->isEventAuditable($EVENT) ? $EVENT : null;
 
         return $this;
     }
@@ -590,11 +590,11 @@ trait Auditable
         }
 
         // The Audit must be for this specific Auditable model
-        if ($this->getKey() !== $audit->auditable_id) {
+        if ($this->getKey() !== $audit->AUDIT_ID) {
             throw new AuditableTransitionException(sprintf(
-                'Expected Auditable id %s, got %s instead',
+                'Expected Auditable AUDIT_TRAILS_ID %s, got %s instead',
                 $this->getKey(),
-                $audit->auditable_id
+                $audit->AUDIT_ID
             ));
         }
 

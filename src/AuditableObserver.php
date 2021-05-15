@@ -15,7 +15,7 @@ class AuditableObserver
     public static $restoring = false;
 
     /**
-     * Handle the retrieved event.
+     * Handle the retrieved EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *
@@ -27,7 +27,7 @@ class AuditableObserver
     }
 
     /**
-     * Handle the created event.
+     * Handle the created EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *
@@ -39,7 +39,7 @@ class AuditableObserver
     }
 
     /**
-     * Handle the updated event.
+     * Handle the updated EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *
@@ -47,14 +47,14 @@ class AuditableObserver
      */
     public function updated(Auditable $model)
     {
-        // Ignore the updated event when restoring
+        // Ignore the updated EVENT when restoring
         if (!static::$restoring) {
             Auditor::execute($model->setAuditEvent('updated'));
         }
     }
 
     /**
-     * Handle the deleted event.
+     * Handle the deleted EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *
@@ -66,7 +66,7 @@ class AuditableObserver
     }
 
     /**
-     * Handle the restoring event.
+     * Handle the restoring EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *
@@ -74,14 +74,14 @@ class AuditableObserver
      */
     public function restoring(Auditable $model)
     {
-        // When restoring a model, an updated event is also fired.
-        // By keeping track of the main event that took place,
+        // When restoring a model, an updated EVENT is also fired.
+        // By keeping track of the main EVENT that took place,
         // we avoid creating a second audit with wrong values
         static::$restoring = true;
     }
 
     /**
-     * Handle the restored event.
+     * Handle the restored EVENT.
      *
      * @param \OwenIt\Auditing\Contracts\Auditable $model
      *
@@ -92,7 +92,7 @@ class AuditableObserver
         Auditor::execute($model->setAuditEvent('restored'));
 
         // Once the model is restored, we need to put everything back
-        // as before, in case a legitimate update event is fired
+        // as before, in case a legitimate update EVENT is fired
         static::$restoring = false;
     }
 }

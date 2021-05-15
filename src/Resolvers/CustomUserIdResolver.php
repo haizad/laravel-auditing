@@ -12,6 +12,6 @@ class CustomUserIdResolver implements \OwenIt\Auditing\Contracts\CustomUserIdRes
      */
     public static function resolve(): string
     {
-        return Session::get('user_id');
+        return Session::get('USER_ID');
     }
 }

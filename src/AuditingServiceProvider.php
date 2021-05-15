@@ -53,7 +53,7 @@ class AuditingServiceProvider extends ServiceProvider implements DeferrableProvi
             ], 'config');
 
             $this->publishes([
-                __DIR__.'/../database/migrations/audits.stub' => database_path(
+                __DIR__.'/../database/migrations/AUDIT_TRAILS.stub' => database_path(
                     sprintf('migrations/%s_create_audits_table.php', date('Y_m_d_His'))
                 ),
             ], 'migrations');

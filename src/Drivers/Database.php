@@ -25,15 +25,15 @@ class Database implements AuditDriver
     public function prune(Auditable $model): bool
     {
         if (($threshold = $model->getAuditThreshold()) > 0) {
-            $forRemoval = $model->audits()
+            $forRemoval = $model->AUDIT_TRAILS()
                 ->latest()
                 ->get()
                 ->slice($threshold)
-                ->pluck('id');
+                ->pluck('AUDIT_TRAILS_ID');
 
             if (!$forRemoval->isEmpty()) {
-                return $model->audits()
-                    ->whereIn('id', $forRemoval)
+                return $model->AUDIT_TRAILS()
+                    ->whereIn('AUDIT_TRAILS_ID', $forRemoval)
                     ->delete() > 0;
             }
         }

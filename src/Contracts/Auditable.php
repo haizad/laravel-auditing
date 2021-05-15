@@ -7,23 +7,23 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 interface Auditable
 {
     /**
-     * Auditable Model audits.
+     * Auditable Model AUDIT_TRAILS.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function audits(): MorphMany;
+    public function AUDIT_TRAILS(): MorphMany;
 
     /**
-     * Set the Audit event.
+     * Set the Audit EVENT.
      *
-     * @param string $event
+     * @param string $EVENT
      *
      * @return Auditable
      */
-    public function setAuditEvent(string $event): Auditable;
+    public function setAuditEvent(string $EVENT): Auditable;
 
     /**
-     * Get the Audit event that is set.
+     * Get the Audit EVENT that is set.
      *
      * @return string|null
      */
@@ -111,7 +111,7 @@ interface Auditable
     public function transformAudit(array $data): array;
 
     /**
-     * Generate an array with the model tags.
+     * Generate an array with the model TAGS.
      *
      * @return array
      */

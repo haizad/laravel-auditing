@@ -42,9 +42,9 @@ return [
     */
     'resolver' => [
         'user'       => OwenIt\Auditing\Resolvers\UserResolver::class,
-        'ip_address' => OwenIt\Auditing\Resolvers\IpAddressResolver::class,
-        'user_agent' => OwenIt\Auditing\Resolvers\UserAgentResolver::class,
-        'url'        => OwenIt\Auditing\Resolvers\UrlResolver::class,
+        'IP_ADDRESS' => OwenIt\Auditing\Resolvers\IpAddressResolver::class,
+        'BROWSER' => OwenIt\Auditing\Resolvers\UserAgentResolver::class,
+        'URL'        => OwenIt\Auditing\Resolvers\UrlResolver::class,
     ],
 
     /*
@@ -119,7 +119,7 @@ return [
 
     'drivers' => [
         'database' => [
-            'table'      => 'audits',
+            'table'      => 'AUDIT_TRAILS',
             'connection' => null,
         ],
     ],
