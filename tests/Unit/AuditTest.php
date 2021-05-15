@@ -377,7 +377,7 @@ EOF;
 
         // Audit with redacted/encoded attributes
         $audit = factory(Audit::class)->create([
-            'auditable_type' => get_class($article),
+            'AUDIT_MODEL' => get_class($article),
             'OLD_VALUES'     => [
                 'title'    => 'SG93IFRvIEF1ZGl0IE1vZGVscw==',
                 'content'  => '##A',

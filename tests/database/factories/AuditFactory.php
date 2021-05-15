@@ -22,7 +22,7 @@ $factory->define(Audit::class, function (Faker $faker) {
         'AUDIT_ID' => function () {
             return factory(Article::class)->create()->AUDIT_TRAILS_ID;
         },
-        'auditable_type' => Article::class,
+        'AUDIT_MODEL' => Article::class,
         'OLD_VALUES'     => [],
         'NEW_VALUES'     => [],
         'URL'            => $faker->URL,

@@ -410,7 +410,7 @@ class AuditableTest extends AuditingTestCase
             ],
             'EVENT'          => 'created',
             'AUDIT_ID'   => null,
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
             'USER_ID'        => null,
             'USER_MODEL'      => null,
             'URL'            => 'console',
@@ -469,7 +469,7 @@ class AuditableTest extends AuditingTestCase
             ],
             'EVENT'          => 'created',
             'AUDIT_ID'   => null,
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
             'USER_ID'        => $AUDIT_TRAILS_ID,
             'USER_MODEL'      => $type,
             'URL'            => 'console',
@@ -549,7 +549,7 @@ class AuditableTest extends AuditingTestCase
             ],
             'EVENT'          => 'created',
             'AUDIT_ID'   => null,
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
             'USER_ID'        => null,
             'USER_MODEL'      => null,
             'URL'            => 'console',
@@ -915,7 +915,7 @@ class AuditableTest extends AuditingTestCase
         $this->expectExceptionMessage('Expected Auditable type OwenIt\Auditing\Tests\Models\Article, got OwenIt\Auditing\Tests\Models\User instead');
 
         $audit = factory(Audit::class)->make([
-            'auditable_type' => User::class,
+            'AUDIT_MODEL' => User::class,
         ]);
 
         $model = new Article();
@@ -937,7 +937,7 @@ class AuditableTest extends AuditingTestCase
         ]);
 
         $audit = factory(Audit::class)->make([
-            'auditable_type' => 'users',
+            'AUDIT_MODEL' => 'users',
         ]);
 
         $model = new Article();
@@ -972,7 +972,7 @@ class AuditableTest extends AuditingTestCase
         $model = factory(Article::class)->create();
 
         $audit = factory(Audit::class)->create([
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
             'AUDIT_ID'   => (string) $model->AUDIT_TRAILS_ID,
         ]);
 
@@ -1005,7 +1005,7 @@ class AuditableTest extends AuditingTestCase
         }
 
         $audit = factory(Audit::class)->create([
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
             'AUDIT_ID'   => $key,
         ]);
 
@@ -1029,7 +1029,7 @@ class AuditableTest extends AuditingTestCase
 
         $audit = factory(Audit::class)->create([
             'AUDIT_ID'   => $model->getKey(),
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
         ]);
 
         $model->transitionTo($audit);
@@ -1046,7 +1046,7 @@ class AuditableTest extends AuditingTestCase
         $incompatibleAudit = factory(Audit::class)->create([
             'EVENT'          => 'created',
             'AUDIT_ID'   => $model->getKey(),
-            'auditable_type' => Article::class,
+            'AUDIT_MODEL' => Article::class,
             'OLD_VALUES'     => [],
             'NEW_VALUES'     => [
                 'subject' => 'Culpa qui rerum excepturi quisquam quia officiis.',
@@ -1104,7 +1104,7 @@ class AuditableTest extends AuditingTestCase
         $AUDIT_TRAILS = $models->map(function (Article $model) use ($auditableType, $oldValues, $newValues) {
             return factory(Audit::class)->create([
                 'AUDIT_ID'   => $model->getKey(),
-                'auditable_type' => $auditableType,
+                'AUDIT_MODEL' => $auditableType,
                 'OLD_VALUES'     => $oldValues,
                 'NEW_VALUES'     => $newValues,
             ]);

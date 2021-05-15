@@ -286,8 +286,9 @@ trait Auditable
             'NEW_VALUES'         => $new,
             'EVENT'              => $this->auditEvent,
             'AUDIT_ID'       => $this->getKey(),
-            'auditable_type'     => $this->getMorphClass(),
+            'AUDIT_MODEL'     => $this->getMorphClass(),
             $morphPrefix . '_ID'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('USER_ID'),
+            'GROUP_ID'   => $this->resolveCustomGroupId(),
             $morphPrefix . '_MODEL' => $user ? $user->getMorphClass() : null,
             'URL'                => $this->resolveUrl(),
             'IP_ADDRESS'         => $this->resolveIpAddress(),
@@ -338,6 +339,24 @@ trait Auditable
         }
 
         throw new AuditingException('Invalid customUserIdResolver implementation');
+    }
+
+    /**
+     * Resolve the Custom Group Id.
+     *
+     * @throws AuditingException
+     *
+     * @return mixed|null
+     */
+    protected function resolveCustomGroupId()
+    {
+        $customGroupIdResolver = Config::get('audit.resolver.GROUP_ID');
+
+        if (is_subclass_of($customGroupIdResolver, CustomGroupIdResolver::class)) {
+            return call_user_func([$customGroupIdResolver, 'resolve']);
+        }
+
+        throw new AuditingException('Invalid customGroupIdResolver implementation');
     }
 
     /**
@@ -582,11 +601,11 @@ trait Auditable
     public function transitionTo(Contracts\Audit $audit, bool $old = false): Contracts\Auditable
     {
         // The Audit must be for an Auditable model of this type
-        if ($this->getMorphClass() !== $audit->auditable_type) {
+        if ($this->getMorphClass() !== $audit->AUDIT_MODEL) {
             throw new AuditableTransitionException(sprintf(
                 'Expected Auditable type %s, got %s instead',
                 $this->getMorphClass(),
-                $audit->auditable_type
+                $audit->AUDIT_MODEL
             ));
         }
 
