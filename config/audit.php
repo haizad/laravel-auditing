@@ -45,6 +45,7 @@ return [
         'IP_ADDRESS' => OwenIt\Auditing\Resolvers\IpAddressResolver::class,
         'BROWSER' => OwenIt\Auditing\Resolvers\UserAgentResolver::class,
         'URL'        => OwenIt\Auditing\Resolvers\UrlResolver::class,
+        'USER_ID' => OwenIt\Auditing\Resolvers\CustomUserIdResolver::class,
         'GROUP_ID' => OwenIt\Auditing\Resolvers\CustomGroupIdResolver::class,
     ],
 

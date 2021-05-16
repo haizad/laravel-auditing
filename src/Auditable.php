@@ -275,7 +275,7 @@ trait Auditable
             }
         }
 
-        $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
+        // $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
 
         $TAGS = implode(',', $this->generateTags());
 
@@ -287,9 +287,9 @@ trait Auditable
             'EVENT'              => $this->auditEvent,
             'AUDIT_ID'       => $this->getKey(),
             'AUDIT_MODEL'     => $this->getMorphClass(),
-            $morphPrefix . '_ID'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('USER_ID'),
+            'USER_ID'   => $this->resolveCustomUserId(), //$user ? $user->getAuthIdentifier() : session()->get('USER_ID'),
             'GROUP_ID'   => $this->resolveCustomGroupId(),
-            $morphPrefix . '_MODEL' => $user ? $user->getMorphClass() : null,
+            'USER_MODEL' => $user ? $user->getMorphClass() : null,
             'URL'                => $this->resolveUrl(),
             'IP_ADDRESS'         => $this->resolveIpAddress(),
             'BROWSER'         => $this->resolveUserAgent(),
@@ -332,7 +332,7 @@ trait Auditable
      */
     protected function resolveCustomUserId()
     {
-        $customUserIdResolver = Config::get('audit.resolver.customUserId');
+        $customUserIdResolver = Config::get('audit.resolver.USER_ID');
 
         if (is_subclass_of($customUserIdResolver, CustomUserIdResolver::class)) {
             return call_user_func([$customUserIdResolver, 'resolve']);

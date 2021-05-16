@@ -68,7 +68,7 @@ trait Audit
      */
     public function resolveData(): array
     {
-        $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
+        // $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
 
         // Metadata
         $this->data = [
@@ -80,8 +80,8 @@ trait Audit
             'audit_tags'       => $this->TAGS,
             'audit_created_at' => $this->serializeDate($this->created_at),
             'audit_updated_at' => $this->serializeDate($this->updated_at),
-            'USER_ID'          => $this->getAttribute($morphPrefix.'_ID'),
-            'USER_MODEL'        => $this->getAttribute($morphPrefix.'_MODEL'),
+            'USER_ID'          => $this->getAttribute('USER_ID'),
+            'USER_MODEL'        => $this->getAttribute('USER_MODEL'),
         ];
 
         if ($this->user) {
