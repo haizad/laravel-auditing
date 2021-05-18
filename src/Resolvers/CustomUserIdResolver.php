@@ -10,8 +10,14 @@ class CustomUserIdResolver implements \OwenIt\Auditing\Contracts\CustomUserIdRes
     /**
      * {@inheritdoc}
      */
-    public static function resolve(): string
+    public static function resolve(Request $request): string
     {
-        return Session::get('USER_ID');
+        // if ($request->headers->has('user_id')) {
+            return request()->header('UID') ?? 0;
+        //   }else{
+
+        //   }
+
+        // return Session::get('USER_ID');
     }
 }

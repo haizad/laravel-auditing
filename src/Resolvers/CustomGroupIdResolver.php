@@ -12,6 +12,6 @@ class CustomGroupIdResolver implements \OwenIt\Auditing\Contracts\CustomGroupIdR
      */
     public static function resolve(): string
     {
-        return Session::get('GROUP_ID');
+        return request()->header('GID') ?? 0;
     }
 }
